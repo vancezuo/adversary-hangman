@@ -18,6 +18,9 @@ public class Hangman {
 	 * Launches the application.
 	 */
 	public static void main(String[] args) {
+		// Fixes rendering issues on Windows
+		System.setProperty("sun.java2d.noddraw", "true");
+		
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
