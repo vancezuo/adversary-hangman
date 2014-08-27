@@ -15,8 +15,8 @@ import javax.swing.JPanel;
  * Created: May 24, 2013
  *
  */
-class WordPanel extends JPanel {
-	
+class HangmanWordPanel extends JPanel {
+	// Constants
 	private static final int H_GAP = 5; // Horizontal spacing
 	private static final int V_GAP = 0; // Vertical spacing
 	
@@ -24,8 +24,9 @@ class WordPanel extends JPanel {
 	private static final int INIT_SIZE = 24;
 	private static final double INIT_SCALE = 1.0;
 	
+	
 	// Instance fields
-	private LetterLabel[] letters;
+	private HangmanLetterLabel[] letters;
 	private boolean[] changed; // For detecting which letters are solved
 	
 	private JPanel wordLine;
@@ -37,17 +38,19 @@ class WordPanel extends JPanel {
 	private double heightScale;
 	private final int initLetters; // Number of letters
 	
+	
 	// Constructors
 	/**
 	 * Creates a new Word Panel with a given number of letters.
 	 * @param numLetters The number of letters.
 	 */
-	public WordPanel(int numLetters) {
+	public HangmanWordPanel(int numLetters) {
 		heightScale = INIT_SCALE;
 		initLetters = numLetters;
 		setLayout(new GridLayout(0, 1, H_GAP, V_GAP));
 		reset(numLetters);
 	}
+	
 	
 	// Public methods
 	/**
@@ -61,8 +64,8 @@ class WordPanel extends JPanel {
 	}
 	
 	/**
-	 * Resets the Word Panel for a new game. The number of spaces may change
-	 * depending on the number of letters in the bew word. All of the spaces
+	 * Resets the Word Panel (for a new game). The number of spaces may change
+	 * depending on the number of letters in the new word. All of the spaces
 	 * will become blank.
 	 * @param numLetters The number of letters in the new game's word.
 	 */
@@ -85,10 +88,10 @@ class WordPanel extends JPanel {
 			if (numLetters > initLetters)
 				 size = initLetters * INIT_SIZE / numLetters;
 			// Initializes letters and changed arrays
-			letters = new LetterLabel[numLetters];
+			letters = new HangmanLetterLabel[numLetters];
 			changed = new boolean[numLetters];
 			for (int i = 0; i < numLetters; i++) {
-				letters[i] = new LetterLabel(heightScale, FONT, size);
+				letters[i] = new HangmanLetterLabel(heightScale, FONT, size);
 				changed[i] = false;
 				wordLine.add(letters[i]);
 			}
@@ -132,7 +135,7 @@ class WordPanel extends JPanel {
 	 */
 	public void updateSize(double widthChangeRatio, double heightChangeRatio) {
 		heightScale *= heightChangeRatio;
-		for (LetterLabel letter : letters) {
+		for (HangmanLetterLabel letter : letters) {
 			letter.updateSize(heightChangeRatio);
 		}
 	}

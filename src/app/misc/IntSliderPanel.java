@@ -1,5 +1,8 @@
-package app.settings;
+package app.misc;
 
+import java.awt.Component;
+
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -7,30 +10,24 @@ import javax.swing.JSlider;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.Component;
-import javax.swing.Box;
 
 /**
- * An Int Slider Panel is the part of the Settings Dialog for setting 
- * numerical parameters -- word length and lives. It consists of a 
- * JSlider, and a JLabel denoting the selected value.
+ * An Int Slider Panel is intended for setting integral parameters. 
+ * It consists of a JSlider, and a JLabel denoting the selected value.
  * 
  * @author Vance Zuo
  * Created: May 13, 2013
  *
  */
-class IntSliderPanel extends JPanel implements SettingsDialog.Restorable {
+public class IntSliderPanel extends JPanel {
 	
-	private static final int H_GAP = 5; // Horizontal Spacing
+	private static final int H_GAP = 5; // Defaut horizontal Spacing
 
 	// Instance Fields
 	private JSlider slider;
 	private JLabel value;
-	
-	private Component horizontalStrut;
-	
-	private int prevValue;
 
+	private Component horizontalStrut;
 	
 	// Constructors
 	/**
@@ -40,10 +37,37 @@ class IntSliderPanel extends JPanel implements SettingsDialog.Restorable {
 	 * @param max  The highest selectable value
 	 * @param init The initially selected value
 	 */
-	public IntSliderPanel(String title, int min, int max, int init) {
+	public IntSliderPanel(String title, int min, int max, int init,
+			boolean labelOnRight) {
 		setBorder(new TitledBorder(title));
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
+		if (labelOnRight) {
+			initSlider(min, max, init);	
+			addSpacing();
+			initLabel();
+		} else {
+			initLabel();	
+			addSpacing();
+			initSlider(min, max, init);	
+		}
+	}
+	
+	public IntSliderPanel(String title, int min, int max, int init) {
+		this(title, min, max, init, true);
+	}
+	
+	public IntSliderPanel(String title, int min, int max) {
+		this(title, min, max, min);
+	}
+
+	/**
+	 * Initializes and adds slider, with visible snap-to ticks.
+	 * @param min lowest number that can be selected
+	 * @param max highest number that can be selected
+	 * @param init number that slider is set to initially
+	 */
+	private void initSlider(int min, int max, int init) {
 		slider = new JSlider(min, max, init);
 		slider.setMinorTickSpacing(1);
 		slider.setPaintTicks(true);
@@ -55,17 +79,35 @@ class IntSliderPanel extends JPanel implements SettingsDialog.Restorable {
 			}
 		});
 		add(slider);
-		
-		horizontalStrut = Box.createHorizontalStrut(H_GAP);
-		add(horizontalStrut);
-		
-		value = new JLabel(String.valueOf(getValue()));
-		add(value);
-		
-		prevValue = getValue();
 	}
 	
+	/**
+	 * Adds a horizontal strut, for creating space between components.
+	 * @param size size in pixels of the strut
+	 */
+	private void addSpacing() {
+		horizontalStrut = Box.createHorizontalStrut(H_GAP);
+		add(horizontalStrut);
+	}
+	
+	/**
+	 * Initializes and adds the slider's label
+	 */
+	private void initLabel() {
+		value = new JLabel(String.valueOf(getValue()));
+		add(value);
+	}
+	
+	
 	// Public Methods
+	/**
+	 * Adds a change listener to the slider.
+	 * @param l The ChangeListener object.
+	 */
+	public void addChangeListener(ChangeListener l) {
+		slider.addChangeListener(l);
+	}
+	
 	/**
 	 * Gets the selected (numerical) value of the Int Slider Panel.
 	 * @return The current value of the panel's slider.
@@ -96,19 +138,17 @@ class IntSliderPanel extends JPanel implements SettingsDialog.Restorable {
 	 * Sets the maximum selectable value in the Int Slider Panel.
 	 * @param newMax The new maximum value
 	 */
-
 	public void setMax(int newMax) {
 		slider.setMaximum(newMax);
 	}
-
-	@Override
-	public void save() {
-		prevValue = getValue();
-	}
-
-	@Override
-	public void restore() {
-		slider.setValue(prevValue);
+	
+	/**
+	 * Sets the spacing between the numerical label and slider of the panel.
+	 * @param spacing The new spacing in pixels
+	 */
+	public void setSpacing(int spacing) {
+		if (spacing >= 0)
+			horizontalStrut.setSize(horizontalStrut.getWidth(), spacing);
 	}
 
 }

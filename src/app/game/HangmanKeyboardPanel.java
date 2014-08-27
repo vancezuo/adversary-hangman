@@ -20,13 +20,17 @@ import javax.swing.JPanel;
  * Created: May 23, 2013
  *
  */
-class KeyboardPanel extends JPanel {
+class HangmanKeyboardPanel extends JPanel {
+	// Constants
+	// Action commands
+	public static final String SURRENDER_CMD = "Surrender";
 	
 	// Two icon sizes, 32x32 and 48x48, to provide some scale flexibility
-	private static final URL GIVEUP_ICON_32 = KeyboardPanel.class
+	private static final URL GIVEUP_ICON_32 = HangmanKeyboardPanel.class
 			.getResource("/img/white_flag_32.png");
-	private static final URL GIVEUP_ICON_48 = KeyboardPanel.class
+	private static final URL GIVEUP_ICON_48 = HangmanKeyboardPanel.class
 			.getResource("/img/white_flag_48.png");
+	
 	// By default, arrayed on 3 rows by 9 column grid
 	private static final int NUM_ROWS = 3;
 	private static final int NUM_COLS = 9;
@@ -37,17 +41,19 @@ class KeyboardPanel extends JPanel {
 	private static final int INIT_SIZE = 16;
 	private static final double INIT_SCALE = 1.0;
 
+	
 	// Instance Variables
 	private JButton[] keys;
 	// Scale variables are relative to initial width/height
 	private double widthScale;
 	private double heightScale;
 	
+	
 	// Constructors
 	/**
 	 * Creates the Keyboard Panel. 
 	 */
-	public KeyboardPanel() {
+	public HangmanKeyboardPanel() {
 		heightScale = INIT_SCALE;
 		widthScale = INIT_SCALE;
 		
@@ -65,7 +71,7 @@ class KeyboardPanel extends JPanel {
 		// Special case: White flag button
 		int last = LETTERS.length();
 		keys[last] = new JButton(new ImageIcon(GIVEUP_ICON_32));
-		initButton(keys[last], "Surrender");
+		initButton(keys[last], SURRENDER_CMD);
 	}
 
 	/**
@@ -82,6 +88,7 @@ class KeyboardPanel extends JPanel {
 		key.setPreferredSize(new Dimension(size, size));
 		add(key);
 	}
+	
 	
 	// Public methods
 	/**
@@ -136,7 +143,7 @@ class KeyboardPanel extends JPanel {
 	 * Adds an action listener to all of the buttons in the panel.
 	 * @param l Action Listener to add.
 	 */
-	public void addPlayListener(ActionListener l) {
+	public void addActionListener(ActionListener l) {
 		for (JButton button : keys) {
 			button.addActionListener(l);
 		}

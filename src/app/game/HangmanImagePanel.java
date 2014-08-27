@@ -7,7 +7,6 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -21,17 +20,20 @@ import javax.swing.SwingConstants;
  * Created: May 24, 2013
  *
  */
-class ManPanel extends JPanel {
+class HangmanImagePanel extends JPanel {
+	// Constants
 	private static final String PATH = "/img/h"; // Prefix for all the images
 	// Where the number of lives is fewer than the number of hangman images,
 	// images with higher priority (lower number) are preferred.
 	private static final int[] PRIORITY = {17, 16, 15, 14, 0, 7, 13, 6, 12, 3,
 										   11, 5, 10, 2, 9, 4, 8, 1};
 	private static final int NUM_IMG = 18;
-	private static final String FONT = "Goudy Stout";
+	
+	private static final String FONT = "Goudy Stout";	
 	private static final double INIT_SCALE = 1.0;
 	private static final int INIT_HEIGHT = 108; // In pixels
 	private static final int INIT_FONT_SIZE = 14;	
+	
 	
 	// Instance Variables
 	private double heightScale; // For resizing image upon window resize
@@ -43,27 +45,48 @@ class ManPanel extends JPanel {
 	private int lives;
 	private int current; // Current state, or image #
 	
+	
 	// Constructors
 	/**
-	 * Creates the panel with a starting image based on* the starting 
+	 * Creates the panel with a starting image based on the starting 
 	 * number of lives.
 	 * @param initLives The starting number of lives the player has.
 	 */
-	public ManPanel(int initLives) {
+	public HangmanImagePanel(int initLives) {
 		setLayout(new GridLayout());
-		
-		// Initializes the base image icons.
+		initImages(); 
+		initScalingVars();
+		initHangmanImage();		
+		reset(initLives); // Sets to correct starting image
+	}
+
+	/**
+	 * Initializes the base image icons.
+	 */
+	private void initImages() {
 		images = new ImageIcon[NUM_IMG];
 		for (int i = 0; i < NUM_IMG; i++) {
-			URL current = ManPanel.class.getResource(PATH + i + ".png");
+			URL current = HangmanImagePanel.class.getResource(PATH + i + ".png");
 			images[i] = new ImageIcon(current);
 		}
-		
+	}
+
+	/**
+	 * Initializes the variables involved in rescaling the hangman image.
+	 * Base images icons must be initialized first.
+	 */
+	private void initScalingVars() {
 		// Note the image scale is set so its initial height is INIT_HEIGHT.
 		int imgHeight = images[0].getIconHeight();
 		heightScale = INIT_SCALE * INIT_HEIGHT / imgHeight;
 		fontScale = (float) INIT_SCALE;
-		
+	}
+
+	/**
+	 * Initializes the actual hangman image.
+	 * Scaling variables must be initialized first.
+	 */
+	private void initHangmanImage() {
 		man = new JButton();
 		man.setFont(new Font(
 				FONT, Font.PLAIN, (int) (fontScale * INIT_FONT_SIZE)));
@@ -75,8 +98,6 @@ class ManPanel extends JPanel {
 		man.setContentAreaFilled(false);
 		man.setBorderPainted(false);
 		add(man);
-		
-		reset(initLives); // Sets to correct starting image
 	}
 	
 	// Public Methods

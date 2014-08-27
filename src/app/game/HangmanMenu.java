@@ -9,7 +9,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JToolBar;
 
 /**
- * The Options Bar is a menu of buttons for navigating the Hangman program:
+ * The Hangman Menu is a menu bar of buttons for navigating the Hangman app:
  * creating a new game, accessing the settings, opening the about box,
  * and exiting.
  * 
@@ -17,16 +17,24 @@ import javax.swing.JToolBar;
  * Created: May 24, 2013
  *
  */
-class OptionsBar extends JMenuBar {
-
+class HangmanMenu extends JMenuBar {
+	// Constants
+	// Action commands
+	public static final String EXIT_CMD = "Exit";
+	public static final String ABOUT_CMD = "About";
+	public static final String SETTINGS_CMD = "Settings";
+	public static final String NEW_CMD = "New Game";
+	
+	// Image urls
 	private static final URL NEW_ICON = 
-			OptionsBar.class.getResource("/img/game_stick.png");
+			HangmanMenu.class.getResource("/img/game_stick.png");
 	private static final URL SETTINGS_ICON = 
-			OptionsBar.class.getResource("/img/gears.png");
+			HangmanMenu.class.getResource("/img/gears.png");
 	private static final URL INFO_ICON =
-			OptionsBar.class.getResource("/img/question.png");
+			HangmanMenu.class.getResource("/img/question.png");
 	private static final URL EXIT_ICON = 
-			OptionsBar.class.getResource("/img/exit.png");
+			HangmanMenu.class.getResource("/img/exit.png");
+	
 	
 	// Instance Variables
 	private JToolBar menu;
@@ -35,9 +43,12 @@ class OptionsBar extends JMenuBar {
 	private JButton info;
 	private JButton exit;
 	
+	
+	// Private utility classes
 	/**
 	 * An Options Button is a button of the Options Bar, and in particular
-	 * neither has focus nor a visible border. 
+	 * neither has focus nor a visible border. Its action command, note, is
+	 * set to whatever its name is.
 	 * 
 	 * @author Vance Zuo
 	 * Created: May 24, 2013
@@ -57,22 +68,22 @@ class OptionsBar extends JMenuBar {
 	 * Creates the Option Bar, which consists of a toolbar with buttons
 	 * for each option.
 	 */
-	public OptionsBar() {
+	public HangmanMenu() {
 		menu = new JToolBar();
 		menu.setFloatable(false); // Prevents toolbar from being moved
 		menu.setRollover(true); // Makes button borders appear on hover
 		add(menu);
 		
-		newGame = new OptionsButton("New Game", new ImageIcon(NEW_ICON));
+		newGame = new OptionsButton(NEW_CMD, new ImageIcon(NEW_ICON));
 		menu.add(newGame);
 		
-		settings = new OptionsButton("Settings", new ImageIcon(SETTINGS_ICON));
+		settings = new OptionsButton(SETTINGS_CMD, new ImageIcon(SETTINGS_ICON));
 		menu.add(settings);
 		
-		info = new OptionsButton("About", new ImageIcon(INFO_ICON));
+		info = new OptionsButton(ABOUT_CMD, new ImageIcon(INFO_ICON));
 		menu.add(info);
 			
-		exit = new OptionsButton("Exit", new ImageIcon(EXIT_ICON));
+		exit = new OptionsButton(EXIT_CMD, new ImageIcon(EXIT_ICON));
 		menu.add(exit);
 	}
 	
@@ -80,7 +91,7 @@ class OptionsBar extends JMenuBar {
 	 * Adds an action listener to all of the buttons in the Options Bar.
 	 * @param l Action Listener to add.
 	 */
-	public void addButtonListener(ActionListener l) {
+	public void addActionListener(ActionListener l) {
 		newGame.addActionListener(l);
 		settings.addActionListener(l);
 		info.addActionListener(l);

@@ -1,5 +1,8 @@
 package engine;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 /**
  * Enumerates the different word choice modes in a Game. 
  * 
@@ -60,5 +63,12 @@ public enum Mode {
 			return new ScrabbleWord(dict, length);
 		}
 		return null; // Should not be reachable
+	}
+	
+	public static Map<Mode, String> getModeDescriptionMap() {
+		Map<Mode, String> map = new EnumMap<Mode, String>(Mode.class);
+		for (Mode e : Mode.values())
+		    map.put(e, e.getDescription());
+		return map;
 	}
 }

@@ -17,23 +17,25 @@ import javax.swing.border.Border;
  * 
  * @author Vance Zuo
  * Created: May 23, 2013
- * @see app.game.WordPanel
+ * @see app.game.HangmanWordPanel
  *
  */
-class LetterLabel extends JLabel {	
-	
+class HangmanLetterLabel extends JLabel {		
+	// Constants
 	private static final Color UNDERLINE_COLOR = Color.BLACK;
 	private static final int UNDERLINE_THICKNESS = 5;
 	// Widest letter constant is used to determine size of the letter label
 	// such that any letter will fit. Of alphabetical characters 'W' would
 	// almost certainly be the widest.
 	private static final String WIDEST_LETTER = "W";
+	
 
 	// Instance Variables
 	private Font baseFont;
 	private Border underline;
 	private double scale; // For determining font size
 	private final int baseSize; // Base font size
+	
 	
 	// Constructors
 	/**
@@ -42,7 +44,7 @@ class LetterLabel extends JLabel {
 	 * @param font      The name of the font of the Letter Label.
 	 * @param size      The initial font size.
 	 */
-	public LetterLabel(double initScale, String font, int size) {
+	public HangmanLetterLabel(double initScale, String font, int size) {
 		this(' ', initScale, font, size);
 	}
 	
@@ -53,7 +55,7 @@ class LetterLabel extends JLabel {
 	 * @param fontName  The name of the font of the Letter Label.
 	 * @param size      The initial font size.
 	 */
-	public LetterLabel(char ch, double initScale, String fontName, int size) {		
+	public HangmanLetterLabel(char ch, double initScale, String fontName, int size) {		
 		super(String.valueOf(ch));
 	
 		baseFont = new Font(fontName, Font.PLAIN, (int) (initScale * size));
@@ -71,10 +73,11 @@ class LetterLabel extends JLabel {
 				getFontMetrics(baseFont).stringWidth(WIDEST_LETTER),
 				getFontMetrics(baseFont).getHeight())
 		);
-//		setMaximumSize(getPreferredSize());
+		// setMaximumSize(getPreferredSize());
 
-//		setBorder(BorderFactory.createLineBorder(null, 1)); // Debug
+		// setBorder(BorderFactory.createLineBorder(null, 1)); // Debug
 	}
+	
 	
 	// Public Methods
 	/**
