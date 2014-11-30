@@ -25,38 +25,38 @@ class HangmanImagePanel extends JPanel {
 	private static final String PATH = "/img/h"; // Prefix for all the images
 	// Where the number of lives is fewer than the number of hangman images,
 	// images with higher priority (lower number) are preferred.
-	private static final int[] PRIORITY = {17, 16, 15, 14, 0, 7, 13, 6, 12, 3,
-										   11, 5, 10, 2, 9, 4, 8, 1};
-	private static final int NUM_IMG = 18;
-	
-	private static final String FONT = "Goudy Stout";	
+	private static final int[] PRIORITY = {12, 18, 16, 20, 15, 13, 17, 14,
+		19, 11, 10, 9, 8, 7, 2, 0, 3, 4, 5, 6, 1};
+	private static final int NUM_IMG = 21;
+
+	private static final String FONT = "Goudy Stout";
 	private static final double INIT_SCALE = 1.0;
 	private static final int INIT_HEIGHT = 108; // In pixels
-	private static final int INIT_FONT_SIZE = 14;	
-	
-	
+	private static final int INIT_FONT_SIZE = 14;
+
+
 	// Instance Variables
 	private double heightScale; // For resizing image upon window resize
 	private float fontScale;
-	
+
 	private ImageIcon[] images;
 	private JButton man;
 	private int totalLives;
 	private int lives;
 	private int current; // Current state, or image #
-	
-	
+
+
 	// Constructors
 	/**
-	 * Creates the panel with a starting image based on the starting 
+	 * Creates the panel with a starting image based on the starting
 	 * number of lives.
 	 * @param initLives The starting number of lives the player has.
 	 */
 	public HangmanImagePanel(int initLives) {
 		setLayout(new GridLayout());
-		initImages(); 
+		initImages();
 		initScalingVars();
-		initHangmanImage();		
+		initHangmanImage();
 		reset(initLives); // Sets to correct starting image
 	}
 
@@ -67,6 +67,7 @@ class HangmanImagePanel extends JPanel {
 		images = new ImageIcon[NUM_IMG];
 		for (int i = 0; i < NUM_IMG; i++) {
 			URL current = HangmanImagePanel.class.getResource(PATH + i + ".png");
+			System.out.println(current);
 			images[i] = new ImageIcon(current);
 		}
 	}
@@ -99,7 +100,7 @@ class HangmanImagePanel extends JPanel {
 		man.setBorderPainted(false);
 		add(man);
 	}
-	
+
 	// Public Methods
 	/**
 	 * Resets the Man Panel for a new game, based on the starting number of
@@ -114,9 +115,9 @@ class HangmanImagePanel extends JPanel {
 		current = -1;
 		displayNext();
 	}
-	
+
 	/**
-	 * Displays the last image in the hangman sequence (corresponding to 
+	 * Displays the last image in the hangman sequence (corresponding to
 	 * surrendering and ending the game). The number of lives text is
 	 * set to 0.
 	 */
@@ -125,7 +126,7 @@ class HangmanImagePanel extends JPanel {
 		lives = 1;
 		displayNext();
 	}
-	
+
 	/**
 	 * Display the next image in the hangman sequence, updating the lives
 	 * remaining text accordingly.
@@ -137,18 +138,18 @@ class HangmanImagePanel extends JPanel {
 		lives--;
 		man.setText(String.valueOf(lives));
 		// More lives than images => keep image same for now
-		if (lives >= NUM_IMG) 
-			return;  
+		if (lives >= NUM_IMG)
+			return;
 		// Ignores images that must be skipped (since there may be more images
 		// than total lives, lower priority ones are passed over).
 		do { current++; } while (PRIORITY[current] > totalLives);
-		// Sets new icon 
+		// Sets new icon
 		updateIcon(images[current]);
 	}
-	
+
 	/**
 	 * Updates the size of the button graphics based on a previous width
-	 * and height change of the content pane this Man Panel is contained in. 
+	 * and height change of the content pane this Man Panel is contained in.
 	 * @param widthChangeRatio  The ratio of the current content pane width to
 	 *                          the width when this panel size was last updated.
 	 * @param heightChangeRatio The ratio of the current content pane height to
@@ -160,10 +161,10 @@ class HangmanImagePanel extends JPanel {
 		// Sets new icon (with correct size)
 		updateIcon(images[current]);
 	}
-	
+
 	// Private Methods
 	/**
-	 * Sets the image to a new Image Icon. The size may be different from the 
+	 * Sets the image to a new Image Icon. The size may be different from the
 	 * previous displayed icon.
 	 * @param icon Image Icon to display.
 	 */

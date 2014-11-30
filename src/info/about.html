@@ -1,0 +1,30 @@
+<html>
+<h1>Adversary Hangman</h1>
+<i>Copyright 2013-2014 Vance Zuo</i><br>
+<i>Hangman images by Amanda Zuo</i>
+<p>
+Adversary Hangman is the classic hangman game with some added bells and 
+whistles, which can be explored by clicking the 'Settings' button.
+<h3>Dictionary</h3>
+Any text file where words are separated by whitespace can be used by the 
+program. Words containing non-letters and numbers are ignored. Note that 
+duplicates are not culled. The default word list used is the Brown and LOB 
+Corpus' 5066 most common words. If you want more varied and 
+challenging sets, I recommend looking at Alan Beale's 12dicts Word Lists 
+(http://www.wyrdplay.org/12dicts.html).
+<h3>Word Choice</h3>
+Under this category the user can change the word choice algorithm used by the 
+program. <i>Random</i> should be clear enough. <i>Scrabble</i> randomly
+selects 10 words from the dictionary, and chooses the one yielding the highest
+base score in Scrabble. <i>Adversary</i> is the most challenging mode. It 
+doesn't choose a word in the beginning at all. Instead, it constructs its
+word based on your letter choices over the course of the game, aiming to 
+thwart you efforts to win. This mode is inspired by the concept of adversary 
+models, which are used to analyze the performance of computer algorithms.
+<h3>Word Length and Lives</h3>
+These should be self-explanatory. Note that depending on the dictionary, 
+there may be word lengths that are invalid, but technically selectable in
+the slider. If you attempt to choose an invalid length, the program will 
+gently prompt you to select something else. There is also the option, 
+enabled by default, of randomizing the word length after each game.
+</html>
